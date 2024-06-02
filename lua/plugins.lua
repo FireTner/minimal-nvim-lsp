@@ -4,4 +4,5 @@ return {
   require("plugins.mason"),
   require("plugins.lspconfig"),
   require("plugins.cmp"),
+  require("plugins.blankline"),
 }

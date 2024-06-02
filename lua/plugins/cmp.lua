@@ -22,7 +22,25 @@ function M.opts()
       end,
     },
 
-    window = {},
+    formatting = {
+      format = function(_, vim_item)
+        local MAX_LABEL_WIDTH = 20
+        local label = vim_item.abbr
+        local truncated_label = vim.fn.strcharpart(label, 0, MAX_LABEL_WIDTH)
+
+        if truncated_label ~= label then
+          vim_item.abbr = truncated_label .. "…"
+        end
+
+        return vim_item
+      end,
+    },
+
+    window = {
+      completion = {
+        scrollbar = false,
+      },
+    },
 
     mapping = cmp.mapping.preset.insert({
       ['<C-p>'] = cmp.mapping.select_prev_item(),

@@ -1,11 +1,12 @@
 local M = {
   "neovim/nvim-lspconfig",
-  --event = { "User FilePost", "InsertEnter" },
   lazy = false,
 }
 
 function M.config()
   local lsp = require("lspconfig")
+
+  local automatic_setup = { "clangd", }
 
   lsp.lua_ls.setup({
     on_attach = on_attach,
@@ -29,6 +30,14 @@ function M.config()
       },
     },
   })
+
+  for _, server in ipairs(automatic_setup) do
+    lsp[server].setup({
+      on_init = on_init,
+      on_attach = on_attach,
+      capabilities = capabilities,
+    })
+  end
 end
 
 

@@ -4,6 +4,7 @@ local M = {
   dependencies = {
     require("plugins.snip"),
     require("plugins.autopairs"),
+    require("plugins.gitsigns"),
     "saadparwaiz1/cmp_luasnip",
     "hrsh7th/cmp-nvim-lua",
     "hrsh7th/cmp-nvim-lsp",

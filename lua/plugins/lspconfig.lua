@@ -1,13 +1,16 @@
 local M = {
   "neovim/nvim-lspconfig",
-  event = "User FilePost",
+  --event = { "User FilePost", "InsertEnter" },
+  lazy = false,
 }
 
 function M.config()
-  require("lspconfig").lua_ls.setup({
-    on_attach = M.on_attach,
-    on_init = M.on_init,
-    capabilities = M.capabilities,
+  local lsp = require("lspconfig")
+
+  lsp.lua_ls.setup({
+    on_attach = on_attach,
+    on_init = on_init,
+    capabilities = capabilities,
 
     settings = {
       Lua = {
@@ -28,8 +31,9 @@ function M.config()
   })
 end
 
+
 local map = vim.keymap.set
-function M.on_attach(client, bufnr)
+local function on_attach(_, bufnr)
   local function opts(desc)
     return {
       buffer = bufnr,
@@ -54,15 +58,14 @@ function M.on_attach(client, bufnr)
   map("n", "gr", vim.lsp.buf.references, opts("Show references"))
 end
 
-function M.on_init(client, _)
+local function on_init(client, _)
   if client.supports_method("textDocument/semnaticTokens") then
     client.server_capabilities.semnaticTokensProvider = nil
   end
 end
 
-M.capabilities = vim.lsp.protocol.make_client_capabilities()
-
-M.capabilities.textDocument.completion.completionItem = {
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem = {
   documentationFormat = { "markdown", "plaintext", },
   snippetSupport = true,
   preselectSupport = true,

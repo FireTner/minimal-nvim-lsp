@@ -9,6 +9,9 @@ vim.o.rnu = true
 vim.o.cmdheight = 0
 vim.o.laststatus = 3
 
+-- fixes rust overridng neovim options
+vim.g.rust_recommended_style = "0"
+
 vim.o.clipboard = "unnamedplus"
 
 -- add binaries installed by mason.nvim to PATH (otherwise lazy loaded)

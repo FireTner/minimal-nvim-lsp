@@ -23,6 +23,7 @@ function M.opts()
     },
 
     formatting = {
+      fields = { "abbr", "kind" },
       format = function(_, vim_item)
         local MAX_LABEL_WIDTH = 20
         local label = vim_item.abbr
@@ -31,6 +32,8 @@ function M.opts()
         if truncated_label ~= label then
           vim_item.abbr = truncated_label .. "…"
         end
+
+        vim_item.menu = ""
 
         return vim_item
       end,

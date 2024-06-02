@@ -16,6 +16,15 @@ function M.opts()
   local cmp = require("cmp")
 
   return {
+    enabled = function()
+      local ctx = require("cmp.config.context")
+      if vim.api.nvim_get_mode().mode == "c" then
+        return true
+      else
+        return not ctx.in_treesitter_capture("comment")
+          and not ctx.in_syntax_group("Comment")
+      end
+    end,
     snippet = {
       expand = function(args)
         require("luasnip").lsp_expand(args.body)
